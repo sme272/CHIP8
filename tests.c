@@ -261,6 +261,8 @@ void test_drawxy(void) {
     // test if the appropriate bits are written
     chip8.opcode = 0xd124;
     chip8.I = 0x200;
+    chip8.V[1] = 1;
+    chip8.V[2] = 2;
     chip8.ram[0x200] = 0xea;
     chip8.ram[0x201] = 0xac;
     chip8.ram[0x202] = 0xaa;
@@ -273,7 +275,8 @@ void test_drawxy(void) {
     TEST_ASSERT(chip8.V[15] == 0);
 
     // test collisions
-    chip8.opcode = 0xd724;
+    chip8.V[1] = 7;
+    chip8.V[2] = 2;
     drwxy(&chip8);
     TEST_ASSERT(chip8.gfx[2] == 0x74d4000000000000);
     TEST_ASSERT(chip8.gfx[3] == 0x5758000000000000);
@@ -281,6 +284,14 @@ void test_drawxy(void) {
     TEST_ASSERT(chip8.gfx[5] == 0x74d4000000000000);
     TEST_ASSERT(chip8.V[15] == 1);
 
+    chip8.V[1] = 60;
+    chip8.V[2] = 2;
+    drwxy(&chip8);
+    TEST_ASSERT(chip8.gfx[2] == 0x74d400000000000e);
+    TEST_ASSERT(chip8.gfx[3] == 0x575800000000000a);
+    TEST_ASSERT(chip8.gfx[4] == 0x545400000000000a);
+    TEST_ASSERT(chip8.gfx[5] == 0x74d400000000000e);
+    TEST_ASSERT(chip8.V[15] == 0);
 }
 
 void test_skipVxKeyPressed(void) {

@@ -170,8 +170,11 @@ void rndvxx(CHIP8* chip8) {
 
 void drwxy(CHIP8* chip8) {
 	uint8_t n = chip8->opcode & 0xf;
-	uint8_t x = (chip8->opcode >> 8) & 0xf;
-	uint8_t y = (chip8->opcode >> 4) & 0xf;
+	uint8_t x_reg = (chip8->opcode >> 8) & 0xf;
+	uint8_t y_reg = (chip8->opcode >> 4) & 0xf;
+
+	uint8_t x = chip8->V[x_reg];
+	uint8_t y = chip8->V[y_reg];
 
 	uint64_t row = 0;
 
