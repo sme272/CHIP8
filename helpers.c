@@ -10,7 +10,7 @@ void initialize(CHIP8* chip8) {
 	memset(chip8->V, 0, 16);
 	memset(chip8->stack, 0, 16);
 
-	memset(chip8->gfx, 0, 64 * 32);
+	memset(chip8->gfx, 0, 32);
 
 	chip8->sound_timer = 0;
 	chip8->delay_timer = 0;
