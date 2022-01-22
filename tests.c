@@ -285,13 +285,13 @@ void test_drawxy(void) {
 
 void test_skipVxKeyPressed(void) {
     chip8.opcode = 0xe29e;
-    chip8.key = 0x1 << 2;
+    chip8.key[2] = 1;
     chip8.pc = 0x200;
     skpvx(&chip8);
     TEST_ASSERT(chip8.pc == 0x202);
 
     chip8.opcode = 0xe59e;
-    chip8.key = 0x1 << 2;
+    chip8.key[2] = 1;
     chip8.pc = 0x200;
     skpvx(&chip8);
     TEST_ASSERT(chip8.pc == 0x200);
@@ -299,13 +299,13 @@ void test_skipVxKeyPressed(void) {
 
 void test_skipNotVxKeyPressed(void) {
     chip8.opcode = 0xe29e;
-    chip8.key = 0x1 << 2;
+    chip8.key[2] = 1;
     chip8.pc = 0x200;
     skpnvx(&chip8);
     TEST_ASSERT(chip8.pc == 0x200);
 
     chip8.opcode = 0xe59e;
-    chip8.key = 0x1 << 2;
+    chip8.key[2] = 1;
     chip8.pc = 0x200;
     skpnvx(&chip8);
     TEST_ASSERT(chip8.pc == 0x202);
@@ -316,14 +316,6 @@ void test_loadDtVx(void) {
     chip8.delay_timer = 30;
     ldvxdt(&chip8);
     TEST_ASSERT(chip8.V[2] == 30);
-}
-
-void test_loadKeypressVx(void) {
-    chip8.opcode = 0xf20a;
-    chip8.key = 1 << 2;
-    chip8.V[2] = 0;
-    ldvxk(&chip8);
-    TEST_ASSERT(chip8.V[2] == 0x4);
 }
 
 int main(void) {
@@ -354,6 +346,5 @@ int main(void) {
     RUN_TEST(test_skipVxKeyPressed);
     RUN_TEST(test_skipNotVxKeyPressed);
     RUN_TEST(test_loadDtVx);
-    RUN_TEST(test_loadKeypressVx);
     return UNITY_END();
 }
