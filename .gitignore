@@ -50,3 +50,9 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Visual Studio Files
+Debug/*
+x64/*
+*.vcxproj*
+*.sln

@@ -49,3 +49,11 @@ void jpvaddr(CHIP8*);
 void rndvxx(CHIP8*);
 
 void drwxy(CHIP8*);
+
+void skpvx(CHIP8*);
+
+void skpnvx(CHIP8*);
+
+void ldvxdt(CHIP8*);
+
+void ldvxk(CHIP8*);
