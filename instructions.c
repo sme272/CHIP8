@@ -191,3 +191,10 @@ void drwxy(CHIP8* chip8) {
 		chip8->gfx[y + i] ^= row;
 	}
 }
+
+void skpvx(CHIP8* chip8) {
+	uint8_t key = chip8->opcode >> 8 & 0xf;
+	if (chip8->key[key]) {
+		chip8->pc += 2;
+	}
+}
