@@ -257,6 +257,32 @@ void test_randAddByte(void) {
     TEST_ASSERT(chip8.V[1] == 0x4c);
 }
 
+void test_drawxy(void) {
+    // test if the appropriate bits are written
+    chip8.opcode = 0xd124;
+    chip8.I = 0x200;
+    chip8.ram[0x200] = 0xea;
+    chip8.ram[0x201] = 0xac;
+    chip8.ram[0x202] = 0xaa;
+    chip8.ram[0x203] = 0xea;
+    drwxy(&chip8);
+    TEST_ASSERT(chip8.gfx[2] == 0x7500000000000000);
+    TEST_ASSERT(chip8.gfx[3] == 0x5600000000000000);
+    TEST_ASSERT(chip8.gfx[4] == 0x5500000000000000);
+    TEST_ASSERT(chip8.gfx[5] == 0x7500000000000000);
+    TEST_ASSERT(chip8.V[15] == 0);
+
+    // test collisions
+    chip8.opcode = 0xd724;
+    drwxy(&chip8);
+    TEST_ASSERT(chip8.gfx[2] == 0x74d4000000000000);
+    TEST_ASSERT(chip8.gfx[3] == 0x5758000000000000);
+    TEST_ASSERT(chip8.gfx[4] == 0x5454000000000000);
+    TEST_ASSERT(chip8.gfx[5] == 0x74d4000000000000);
+    TEST_ASSERT(chip8.V[15] == 1);
+
+}
+
 int main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_getOpcode);
@@ -281,5 +307,6 @@ int main(void) {
     RUN_TEST(test_loadI);
     RUN_TEST(test_jumpAddrV);
     RUN_TEST(test_randAddByte);
+    RUN_TEST(test_drawxy);
     return UNITY_END();
 }
