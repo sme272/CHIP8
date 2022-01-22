@@ -283,6 +283,20 @@ void test_drawxy(void) {
 
 }
 
+void test_skipVxKeyPressed(void) {
+    chip8.opcode = 0xe29e;
+    chip8.key[2] = 1;
+    chip8.pc = 0x200;
+    skpvx(&chip8);
+    TEST_ASSERT(chip8.pc == 0x202);
+
+    chip8.opcode = 0xe59e;
+    chip8.key[2] = 1;
+    chip8.pc = 0x200;
+    skpvx(&chip8);
+    TEST_ASSERT(chip8.pc == 0x200);
+}
+
 int main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_getOpcode);
@@ -308,5 +322,6 @@ int main(void) {
     RUN_TEST(test_jumpAddrV);
     RUN_TEST(test_randAddByte);
     RUN_TEST(test_drawxy);
+    RUN_TEST(test_skipVxKeyPressed);
     return UNITY_END();
 }
