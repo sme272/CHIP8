@@ -205,3 +205,8 @@ void skpnvx(CHIP8* chip8) {
 		chip8->pc += 2;
 	}
 }
+
+void ldvxdt(CHIP8* chip8) {
+	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
+	chip8->V[x_reg] = chip8->delay_timer;
+}

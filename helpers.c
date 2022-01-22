@@ -92,4 +92,7 @@ void execute_opcode(CHIP8* chip8) {
 	else if (0xe0a1 & chip8->opcode) {
 		skpnvx(&chip8);
 	}
+	else if (0xf007 & chip8->opcode) {
+		ldvxdt(&chip8);
+	}
 }

@@ -311,6 +311,13 @@ void test_skipNotVxKeyPressed(void) {
     TEST_ASSERT(chip8.pc == 0x202);
 }
 
+void test_loadDtVx(void) {
+    chip8.opcode = 0xf207;
+    chip8.delay_timer = 30;
+    ldvxdt(&chip8);
+    TEST_ASSERT(chip8.V[2] == 30);
+}
+
 int main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_getOpcode);
@@ -338,5 +345,6 @@ int main(void) {
     RUN_TEST(test_drawxy);
     RUN_TEST(test_skipVxKeyPressed);
     RUN_TEST(test_skipNotVxKeyPressed);
+    RUN_TEST(test_loadDtVx);
     return UNITY_END();
 }
