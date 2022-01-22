@@ -224,3 +224,47 @@ void ldvxk(CHIP8* chip8) {
 	}
 	chip8->V[x_reg] = j;
 }
+
+void lddt(CHIP8* chip8) {
+	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
+	chip8->delay_timer = chip8->V[x_reg];
+}
+
+void ldst(CHIP8* chip8) {
+	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
+	chip8->sound_timer = chip8->V[x_reg];
+}
+
+void addivx(CHIP8* chip8) {
+	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
+	chip8->I += chip8->V[x_reg];
+}
+
+void ldfvx(CHIP8* chip8) {
+	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
+	chip8->I = 5 * chip8->V[x_reg];
+}
+
+void ldbvx(CHIP8* chip8) {
+	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
+
+	uint8_t value = chip8->V[x_reg];
+	for (uint8_t i = 0; i < 3; i++) {
+		chip8->ram[chip8->I + i] = value % 10;
+		value /= 10;
+	}
+}
+
+void stvx(CHIP8* chip8) {
+	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
+	for (uint8_t i = 0; i <= x_reg; i++) {
+		chip8->ram[chip8->I + i] = chip8->V[i];
+	}
+}
+
+void ldvx(CHIP8* chip8) {
+	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
+	for (uint8_t i = 0; i <= x_reg; i++) {
+		chip8->V[i] = chip8->ram[chip8->I + i];
+	}
+}

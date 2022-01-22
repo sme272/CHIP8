@@ -326,6 +326,72 @@ void test_loadKeypressVx(void) {
     TEST_ASSERT(chip8.V[2] == 0x4);
 }
 
+void test_loadDt(void) {
+    chip8.opcode = 0xf215;
+    chip8.V[2] = 20;
+    lddt(&chip8);
+    TEST_ASSERT(chip8.delay_timer == 20);
+}
+
+void test_loadSt(void) {
+    chip8.opcode = 0xf215;
+    chip8.V[2] = 20;
+    ldst(&chip8);
+    TEST_ASSERT(chip8.sound_timer == 20);
+}
+
+void test_addIVx(void) {
+    chip8.opcode = 0xf21e;
+    chip8.I = 0x2e;
+    chip8.V[2] = 0x12;
+    addivx(&chip8);
+    TEST_ASSERT(chip8.I == 0x40);
+}
+
+void test_loadCharLocation(void) {
+    chip8.opcode = 0xf229;
+    chip8.V[2] = 0xa;
+    chip8.I = 0;
+    ldfvx(&chip8);
+    TEST_ASSERT(chip8.I == 50);
+}
+
+void test_loadBCDVx(void) {
+    chip8.opcode = 0xf233;
+    chip8.V[2] = 123;
+    chip8.I = 0x200;
+    ldbvx(&chip8);
+    TEST_ASSERT(chip8.ram[0x200] = 1);
+    TEST_ASSERT(chip8.ram[0x201] = 2);
+    TEST_ASSERT(chip8.ram[0x202] = 3);
+}
+
+void test_storeV0Vx(void) {
+    chip8.opcode = 0xf255;
+    chip8.I = 0x200;
+    chip8.V[0] = 0x20;
+    chip8.V[1] = 0xf0;
+    chip8.V[2] = 0x50;
+    stvx(&chip8);
+    TEST_ASSERT(chip8.ram[0x200] == 0x20);
+    TEST_ASSERT(chip8.ram[0x201] == 0xf0);
+    TEST_ASSERT(chip8.ram[0x202] == 0x50);
+}
+
+void test_loadV0Vx(void) {
+    chip8.opcode = 0xf365;
+    chip8.I = 0x200;
+    chip8.ram[0x200] = 0x12;
+    chip8.ram[0x201] = 0xf2;
+    chip8.ram[0x202] = 0xa7;
+    chip8.ram[0x203] = 0xde;
+    ldvx(&chip8);
+    TEST_ASSERT(chip8.V[0] == 0x12);
+    TEST_ASSERT(chip8.V[1] == 0xf2);
+    TEST_ASSERT(chip8.V[2] == 0xa7);
+    TEST_ASSERT(chip8.V[3] == 0xde);
+}
+
 int main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_getOpcode);
@@ -355,5 +421,12 @@ int main(void) {
     RUN_TEST(test_skipNotVxKeyPressed);
     RUN_TEST(test_loadDtVx);
     RUN_TEST(test_loadKeypressVx);
+    RUN_TEST(test_loadDt);
+    RUN_TEST(test_loadSt);
+    RUN_TEST(test_addIVx);
+    RUN_TEST(test_loadCharLocation);
+    RUN_TEST(test_loadBCDVx);
+    RUN_TEST(test_storeV0Vx);
+    RUN_TEST(test_loadV0Vx);
     return UNITY_END();
 }
