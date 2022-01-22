@@ -224,3 +224,13 @@ void ldvxk(CHIP8* chip8) {
 	}
 	chip8->V[x_reg] = j;
 }
+
+void lddt(CHIP8* chip8) {
+	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
+	chip8->delay_timer = chip8->V[x_reg];
+}
+
+void ldst(CHIP8* chip8) {
+	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
+	chip8->sound_timer = chip8->V[x_reg];
+}

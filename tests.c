@@ -326,6 +326,20 @@ void test_loadKeypressVx(void) {
     TEST_ASSERT(chip8.V[2] == 0x4);
 }
 
+void test_loadDt(void) {
+    chip8.opcode = 0xf215;
+    chip8.V[2] = 20;
+    lddt(&chip8);
+    TEST_ASSERT(chip8.delay_timer == 20);
+}
+
+void test_loadSt(void) {
+    chip8.opcode = 0xf215;
+    chip8.V[2] = 20;
+    ldst(&chip8);
+    TEST_ASSERT(chip8.sound_timer == 20);
+}
+
 int main(void) {
     UNITY_BEGIN();
     RUN_TEST(test_getOpcode);
@@ -355,5 +369,7 @@ int main(void) {
     RUN_TEST(test_skipNotVxKeyPressed);
     RUN_TEST(test_loadDtVx);
     RUN_TEST(test_loadKeypressVx);
+    RUN_TEST(test_loadDt);
+    RUN_TEST(test_loadSt);
     return UNITY_END();
 }
