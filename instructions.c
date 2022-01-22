@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include "instructions.h"
+#include "helpers.h"
 
 void get_opcode(CHIP8* chip8) {
 	//Opcode is 2 bytes long, first byte located at pc, second immediately after.
@@ -193,15 +194,15 @@ void drwxy(CHIP8* chip8) {
 }
 
 void skpvx(CHIP8* chip8) {
-	uint8_t key = chip8->opcode >> 8 & 0xf;
-	if (chip8->key[key]) {
+	uint8_t key = 0x1 << (chip8->opcode >> 8 & 0xf);
+	if (chip8->key & key) {
 		chip8->pc += 2;
 	}
 }
 
 void skpnvx(CHIP8* chip8) {
-	uint8_t key = chip8->opcode >> 8 & 0xf;
-	if (!chip8->key[key]) {
+	uint8_t key = 0x1 << (chip8->opcode >> 8 & 0xf);
+	if (!(chip8->key & key)) {
 		chip8->pc += 2;
 	}
 }
@@ -209,4 +210,17 @@ void skpnvx(CHIP8* chip8) {
 void ldvxdt(CHIP8* chip8) {
 	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
 	chip8->V[x_reg] = chip8->delay_timer;
+}
+
+void ldvxk(CHIP8* chip8) {
+	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
+	while (!chip8->key) {
+		delay(20);
+	}
+
+	uint8_t j = 1;
+	for (uint8_t i = chip8->key; !(i&1); i >>= 1) {
+		j <<= 1;
+	}
+	chip8->V[x_reg] = j;
 }

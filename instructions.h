@@ -55,3 +55,5 @@ void skpvx(CHIP8*);
 void skpnvx(CHIP8*);
 
 void ldvxdt(CHIP8*);
+
+void ldvxk(CHIP8*);
