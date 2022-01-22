@@ -9,7 +9,7 @@ void get_opcode(CHIP8* chip8) {
 }
 
 void cls(CHIP8* chip8) {
-	for (uint16_t i = 0; i < 64 * 32; i++) {
+	for (uint16_t i = 0; i < 32; i++) {
 		chip8->gfx[i] = 0;
 	}
 }
@@ -175,19 +175,19 @@ void drwxy(CHIP8* chip8) {
 	uint64_t row = 0;
 
 	for (uint8_t i = 0; i < n; i++) {
-		row = chip8->ram[chip8->I + n];
+		row = chip8->ram[chip8->I + i];
 		if (x > 56) {
 			row >>= 64 - x;
 		}
 		else {
 			row <<= 64 - 8 - x;
 		}
-		if (chip8->gfx[y] & row) {
+		if (chip8->gfx[y + i] & row) {
 			chip8->V[15] = 1;
 		}
 		else {
 			chip8->V[15] = 0;
 		}
-		chip8->gfx[y] ^= row;
+		chip8->gfx[y + i] ^= row;
 	}
 }
