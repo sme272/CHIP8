@@ -166,3 +166,28 @@ void rndvxx(CHIP8* chip8) {
 	uint8_t rnd = rand() % 256;
 	chip8->V[op_reg] = op_byte + rnd;
 }
+
+void drwvxvy(CHIP8* chip8) {
+	uint8_t n = chip8->opcode & 0xf;
+	uint8_t x = (chip8->opcode >> 8) & 0xf;
+	uint8_t y = (chip8->opcode >> 4) & 0xf;
+
+	uint64_t row = 0;
+
+	for (uint8_t i = 0; i < n; i++) {
+		row = chip8->ram[chip8->I + n];
+		if (x > 56) {
+			row >>= 64 - x;
+		}
+		else {
+			row <<= 64 - 8 - x;
+		}
+		if (chip8->gfx[y] & row) {
+			chip8->V[15] = 1;
+		}
+		else {
+			chip8->V[15] = 0;
+		}
+		chip8->gfx[y] ^= row;
+	}
+}

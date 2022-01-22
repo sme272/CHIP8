@@ -47,3 +47,5 @@ void ldi(CHIP8*);
 void jpvaddr(CHIP8*);
 
 void rndvxx(CHIP8*);
+
+void drwvxvy(CHIP8*);
