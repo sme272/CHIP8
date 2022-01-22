@@ -198,3 +198,10 @@ void skpvx(CHIP8* chip8) {
 		chip8->pc += 2;
 	}
 }
+
+void skpnvx(CHIP8* chip8) {
+	uint8_t key = chip8->opcode >> 8 & 0xf;
+	if (!chip8->key[key]) {
+		chip8->pc += 2;
+	}
+}

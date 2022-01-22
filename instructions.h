@@ -51,3 +51,5 @@ void rndvxx(CHIP8*);
 void drwxy(CHIP8*);
 
 void skpvx(CHIP8*);
+
+void skpnvx(CHIP8*);

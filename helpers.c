@@ -86,4 +86,10 @@ void execute_opcode(CHIP8* chip8) {
 	else if (0xd000 & chip8->opcode) {
 		drwxy(&chip8);
 	}
+	else if (0xe09e & chip8->opcode) {
+		skpvx(&chip8);
+	}
+	else if (0xe0a1 & chip8->opcode) {
+		skpnvx(&chip8);
+	}
 }
