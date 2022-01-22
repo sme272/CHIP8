@@ -167,7 +167,7 @@ void rndvxx(CHIP8* chip8) {
 	chip8->V[op_reg] = op_byte + rnd;
 }
 
-void drwvxvy(CHIP8* chip8) {
+void drwxy(CHIP8* chip8) {
 	uint8_t n = chip8->opcode & 0xf;
 	uint8_t x = (chip8->opcode >> 8) & 0xf;
 	uint8_t y = (chip8->opcode >> 4) & 0xf;

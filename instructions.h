@@ -48,4 +48,4 @@ void jpvaddr(CHIP8*);
 
 void rndvxx(CHIP8*);
 
-void drwvxvy(CHIP8*);
+void drwxy(CHIP8*);
