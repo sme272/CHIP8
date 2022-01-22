@@ -11,7 +11,7 @@ typedef struct CHIP8 {
 	uint16_t stack[16];
 	uint8_t ram[4096];
 
-	uint8_t gfx[64 * 32];
+	uint64_t gfx[32];
 	uint8_t key[16];
 
 	uint8_t sound_timer;
