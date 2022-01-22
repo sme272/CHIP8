@@ -361,9 +361,9 @@ void test_loadBCDVx(void) {
     chip8.V[2] = 123;
     chip8.I = 0x200;
     ldbvx(&chip8);
-    TEST_ASSERT(chip8.ram[0x200] = 1);
-    TEST_ASSERT(chip8.ram[0x201] = 2);
-    TEST_ASSERT(chip8.ram[0x202] = 3);
+    TEST_ASSERT(chip8.ram[0x200] == 1);
+    TEST_ASSERT(chip8.ram[0x201] == 2);
+    TEST_ASSERT(chip8.ram[0x202] == 3);
 }
 
 void test_storeV0Vx(void) {

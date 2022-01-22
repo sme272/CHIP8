@@ -249,7 +249,7 @@ void ldbvx(CHIP8* chip8) {
 	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
 
 	uint8_t value = chip8->V[x_reg];
-	for (uint8_t i = 0; i < 3; i++) {
+	for (int8_t i = 2; i >= 0; i--) {
 		chip8->ram[chip8->I + i] = value % 10;
 		value /= 10;
 	}
