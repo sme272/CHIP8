@@ -68,7 +68,7 @@ void addvxx(CHIP8* chip8) {
 
 void ldvxvy(CHIP8* chip8) {
 	uint8_t x_reg = (chip8->opcode >> 8) & 0xf;
-	uint8_t y_reg = (chip8->opcode > 4) & 0xf;
+	uint8_t y_reg = (chip8->opcode >> 4) & 0xf;
 	chip8->V[x_reg] = chip8->V[y_reg];
 }
 
@@ -178,6 +178,9 @@ void drwxy(CHIP8* chip8) {
 
 	uint64_t row = 0;
 
+
+	chip8->V[15] = 0;
+
 	for (uint8_t i = 0; i < n; i++) {
 		row = chip8->ram[chip8->I + i];
 		if (x > 56) {
@@ -188,9 +191,6 @@ void drwxy(CHIP8* chip8) {
 		}
 		if (chip8->gfx[y + i] & row) {
 			chip8->V[15] = 1;
-		}
-		else {
-			chip8->V[15] = 0;
 		}
 		chip8->gfx[y + i] ^= row;
 	}

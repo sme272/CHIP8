@@ -1,4 +1,5 @@
 #include <time.h>
+#include <string.h>
 #include "helpers.h"
 #include "instructions.h"
 

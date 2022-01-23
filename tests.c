@@ -414,7 +414,7 @@ int main(void) {
     RUN_TEST(test_skipEqualVxVy);
     RUN_TEST(test_loadVxByte);
     RUN_TEST(test_addVxByte);
-    RUN_TEST(test_loadVxByte);
+    RUN_TEST(test_loadVxVy);
     RUN_TEST(test_orVxVy);
     RUN_TEST(test_andVxVy);
     RUN_TEST(test_xorVxVy);
