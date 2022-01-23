@@ -7,7 +7,7 @@
 CHIP8 chip8;
 
 void setUp(void) {
-    initialize(&chip8);
+    init_cpu(&chip8);
 }
 
 void tearDown(void) {

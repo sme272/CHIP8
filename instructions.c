@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "instructions.h"
 #include "helpers.h"
+#include "gfx.h"
 
 void get_opcode(CHIP8* chip8) {
 	//Opcode is 2 bytes long, first byte located at pc, second immediately after.
@@ -194,6 +195,7 @@ void drwxy(CHIP8* chip8) {
 		}
 		chip8->gfx[y + i] ^= row;
 	}
+	display(chip8);
 }
 
 void skpvx(CHIP8* chip8) {
