@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "instructions.h"
 #include "helpers.h"
+#include "gfx.h"
 
 void get_opcode(CHIP8* chip8) {
 	//Opcode is 2 bytes long, first byte located at pc, second immediately after.
@@ -68,7 +69,7 @@ void addvxx(CHIP8* chip8) {
 
 void ldvxvy(CHIP8* chip8) {
 	uint8_t x_reg = (chip8->opcode >> 8) & 0xf;
-	uint8_t y_reg = (chip8->opcode > 4) & 0xf;
+	uint8_t y_reg = (chip8->opcode >> 4) & 0xf;
 	chip8->V[x_reg] = chip8->V[y_reg];
 }
 
@@ -170,10 +171,16 @@ void rndvxx(CHIP8* chip8) {
 
 void drwxy(CHIP8* chip8) {
 	uint8_t n = chip8->opcode & 0xf;
-	uint8_t x = (chip8->opcode >> 8) & 0xf;
-	uint8_t y = (chip8->opcode >> 4) & 0xf;
+	uint8_t x_reg = (chip8->opcode >> 8) & 0xf;
+	uint8_t y_reg = (chip8->opcode >> 4) & 0xf;
+
+	uint8_t x = chip8->V[x_reg];
+	uint8_t y = chip8->V[y_reg];
 
 	uint64_t row = 0;
+
+
+	chip8->V[15] = 0;
 
 	for (uint8_t i = 0; i < n; i++) {
 		row = chip8->ram[chip8->I + i];
@@ -186,11 +193,9 @@ void drwxy(CHIP8* chip8) {
 		if (chip8->gfx[y + i] & row) {
 			chip8->V[15] = 1;
 		}
-		else {
-			chip8->V[15] = 0;
-		}
 		chip8->gfx[y + i] ^= row;
 	}
+	display(chip8);
 }
 
 void skpvx(CHIP8* chip8) {
@@ -249,7 +254,7 @@ void ldbvx(CHIP8* chip8) {
 	uint8_t x_reg = chip8->opcode >> 8 & 0xf;
 
 	uint8_t value = chip8->V[x_reg];
-	for (uint8_t i = 0; i < 3; i++) {
+	for (int8_t i = 2; i >= 0; i--) {
 		chip8->ram[chip8->I + i] = value % 10;
 		value /= 10;
 	}
