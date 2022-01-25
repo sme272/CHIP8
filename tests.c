@@ -42,7 +42,7 @@ void test_call(void){
     chip8.sp = 3;
     call(&chip8);
     TEST_ASSERT(chip8.sp == 4);
-    TEST_ASSERT(chip8.stack[4] == 0x201);
+    TEST_ASSERT(chip8.stack[4] == 0x200);
     TEST_ASSERT(chip8.pc == 0x404);
 }
 
