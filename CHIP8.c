@@ -8,10 +8,6 @@
 
 int main(int argc, char* argv[]) {
 
-	if (argc != 2) {
-		exit(-1);
-	}
-
 	CHIP8 chip8;
 
 	init_cpu(&chip8);
@@ -20,7 +16,12 @@ int main(int argc, char* argv[]) {
 
 	srand((unsigned)time(NULL));
 
-	load_program(&chip8, argv[1]);
+	if (argc == 1) {
+		load_program(&chip8, "test_opcode.ch8");
+	}
+	else if (argc == 2) {
+		load_program(&chip8, argv[1]);
+	}
 
 	while (1){
 		get_opcode(&chip8);

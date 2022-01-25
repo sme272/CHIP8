@@ -27,7 +27,7 @@ void ret(CHIP8* chip8) {
 
 void call(CHIP8* chip8) {
 	chip8->sp++;
-	chip8->stack[chip8->sp] = ++chip8->pc;
+	chip8->stack[chip8->sp] = chip8->pc;
 	chip8->pc = chip8->opcode & 0x0FFF;
 }
 
